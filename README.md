@@ -2,7 +2,6 @@
 
 A minimal, high-performance developer portfolio built with **React**, **Tailwind CSS v4**, **Framer Motion**, and **Vite**. 
 
-Designed around a dark aesthetic (`#070709`) with bright orange accents (`#f97316`), typography hierarchy, live LeetCode API integration, responsive layouts, and client-side contact delivery.
 
 ---
 
@@ -67,49 +66,6 @@ Designed around a dark aesthetic (`#070709`) with bright orange accents (`#f9731
 | **Build Tool & Bundler** | Vite 8 |
 | **Email Service** | EmailJS (`@emailjs/browser`) |
 | **Data Architecture** | Centralized JS Config (`src/data/portfolio.js`) & LeetCode API Adapter (`src/services/leetcodeService.js`) |
-
----
-
-## 🚀 Local Setup & Installation
-
-### Prerequisites
-- Node.js (v18.x or later)
-- npm or yarn
-
-### Steps
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/vidhunkrishna/Portfolio.git
-   cd Portfolio
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Configure Environment Variables**:
-   Create a `.env` file in the root directory (refer to `.env.example`):
-   ```env
-   VITE_EMAILJS_SERVICE_ID=your_emailjs_service_id
-   VITE_EMAILJS_TEMPLATE_ID=your_emailjs_template_id
-   VITE_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
-   VITE_LEETCODE_USERNAME=jdHyOpae0h
-   ```
-
-4. **Start local dev server**:
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:5173/` in your browser.
-
-5. **Build for Production**:
-   ```bash
-   npm run build
-   ```
-
----
 
 ## 📬 Contact & Links
 
