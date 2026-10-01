@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { EXPERIENCES } from '../data/portfolio';
-import { Briefcase, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
+import { Briefcase, Calendar, MapPin, ExternalLink, Code2 } from 'lucide-react';
+import { GithubIcon } from './SocialIcons';
 
 export default function Experience() {
   return (
@@ -73,6 +74,29 @@ export default function Experience() {
                 <p className="text-neutral-300 text-sm leading-relaxed">
                   {exp.description}
                 </p>
+
+                {/* Project worked on entry inside card */}
+                {exp.project && (
+                  <div className="mt-5 pt-4 border-t border-neutral-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 text-xs text-neutral-300">
+                      <Code2 className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+                      <span className="text-neutral-400 font-mono-code">Project worked on:</span>
+                      <span className="font-bold text-white font-mono-code tracking-wide">{exp.project.name}</span>
+                    </div>
+
+                    <a
+                      href={exp.project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 hover:border-orange-500/50 text-neutral-200 hover:text-white text-xs font-semibold px-3.5 py-2 rounded-xl transition-all shadow-sm group/link w-fit"
+                      title={`View ${exp.project.name} on GitHub`}
+                    >
+                      <GithubIcon className="w-3.5 h-3.5 text-orange-400 group-hover/link:scale-110 transition-transform" />
+                      <span>View on GitHub</span>
+                      <ExternalLink className="w-3 h-3 text-neutral-500 group-hover/link:text-orange-400 transition-colors" />
+                    </a>
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}

@@ -167,7 +167,11 @@ export const EXPERIENCES = [
     role: "Project Intern Trainee — Full Stack Development",
     period: "June – July 2026",
     location: "On-site / Trainee Program",
-    description: "Worked on full-stack web application development, including frontend/backend work, REST APIs, database integration, Git/version control and collaborative development."
+    description: "Worked on full-stack web application development, including frontend/backend work, REST APIs, database integration, Git/version control and collaborative development.",
+    project: {
+      name: "MILZO",
+      githubUrl: "https://github.com/vidhunkrishna/MILZO"
+    }
   },
   {
     id: "cube-n-solutions",
