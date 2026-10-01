@@ -1,11 +1,34 @@
 // Service module for fetching live LeetCode statistics dynamically
-// Prioritizes CORS-compliant primary endpoints to avoid browser console warnings.
+// Primary adapter calls Vercel API route (/api/leetcode) to prevent CORS and rate limits on Vercel deployment.
 
 const DEFAULT_USERNAME = "jdHyOpae0h";
 
-// Array of API adapters ordered by reliability and CORS compliance
+// Array of API adapters ordered by reliability, speed, and Vercel compatibility
 const ADAPTERS = [
-  // Adapter 1: Alfa LeetCode API /userProfile (Returns full profile + submissions + solved counts with Access-Control-Allow-Origin: *)
+  // Adapter 1: Vercel Serverless Function Proxy (/api/leetcode)
+  async (username) => {
+    const response = await fetch(`/api/leetcode?username=${username}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    if (data && (data.status === 'success' || typeof data.totalSolved === 'number')) {
+      return {
+        totalSolved: Number(data.totalSolved),
+        totalQuestions: Number(data.totalQuestions) || 3000,
+        easySolved: Number(data.easySolved) || 0,
+        totalEasy: Number(data.totalEasy) || 800,
+        mediumSolved: Number(data.mediumSolved) || 0,
+        totalMedium: Number(data.totalMedium) || 1600,
+        hardSolved: Number(data.hardSolved) || 0,
+        totalHard: Number(data.totalHard) || 700,
+        acceptanceRate: data.acceptanceRate != null ? Number(data.acceptanceRate) : null,
+        ranking: data.ranking != null ? Number(data.ranking) : null,
+        totalSubmissions: data.totalSubmissions != null ? Number(data.totalSubmissions) : null,
+      };
+    }
+    throw new Error('Invalid payload from Vercel API function');
+  },
+
+  // Adapter 2: Alfa LeetCode API /userProfile
   async (username) => {
     const response = await fetch(`https://alfa-leetcode-api.onrender.com/userProfile/${username}`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -38,7 +61,7 @@ const ADAPTERS = [
     throw new Error('Invalid payload from Alfa UserProfile API');
   },
 
-  // Adapter 2: Alfa LeetCode API /solved (Returns solvedProblem, easySolved, mediumSolved, hardSolved with Access-Control-Allow-Origin: *)
+  // Adapter 3: Alfa LeetCode API /solved
   async (username) => {
     const response = await fetch(`https://alfa-leetcode-api.onrender.com/${username}/solved`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -49,7 +72,6 @@ const ADAPTERS = [
       const medium = Number(data.mediumSolved) || 0;
       const hard = Number(data.hardSolved) || 0;
       const total = Number(data.solvedProblem) || (easy + medium + hard);
-
       const allSub = data.totalSubmissionNum?.find(x => x.difficulty === 'All')?.submissions || null;
 
       return {
@@ -67,29 +89,6 @@ const ADAPTERS = [
       };
     }
     throw new Error('Invalid payload from Alfa Solved API');
-  },
-
-  // Adapter 3: Backup LeetCode Stats API
-  async (username) => {
-    const response = await fetch(`https://leetcode-stats-api.herokuapp.com/${username}`);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
-    if (data && (data.status === 'success' || typeof data.totalSolved === 'number')) {
-      return {
-        totalSolved: Number(data.totalSolved),
-        totalQuestions: Number(data.totalQuestions) || 3000,
-        easySolved: Number(data.easySolved) || 0,
-        totalEasy: Number(data.totalEasy) || 800,
-        mediumSolved: Number(data.mediumSolved) || 0,
-        totalMedium: Number(data.totalMedium) || 1600,
-        hardSolved: Number(data.hardSolved) || 0,
-        totalHard: Number(data.totalHard) || 700,
-        acceptanceRate: data.acceptanceRate != null ? Number(data.acceptanceRate) : null,
-        ranking: data.ranking != null ? Number(data.ranking) : null,
-        totalSubmissions: data.totalSubmissions != null ? Number(data.totalSubmissions) : null,
-      };
-    }
-    throw new Error('Invalid payload from Heroku API');
   }
 ];
 
