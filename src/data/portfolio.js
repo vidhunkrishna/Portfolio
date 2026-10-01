@@ -187,14 +187,30 @@ export const EXPERIENCES = [
   }
 ];
 
-export const EDUCATION = {
-  degree: "Bachelor of Engineering",
-  field: "Computer Science and Engineering",
-  institution: "Sri Krishna College of Technology",
-  location: "Coimbatore, Tamil Nadu",
-  cgpa: "8.3 / 10",
-  badge: "High Academic Standing"
-};
+export const EDUCATION = [
+  {
+    id: "college",
+    degree: "Bachelor of Engineering",
+    field: "Computer Science and Engineering",
+    institution: "Sri Krishna College of Technology",
+    location: "Coimbatore, Tamil Nadu",
+    score: "8.3 / 10",
+    scoreLabel: "Cumulative CGPA",
+    statusBadge: "Pre-Final Year",
+    isCollege: true
+  },
+  {
+    id: "school",
+    degree: "School Education",
+    field: "Pre-KG to 12th",
+    institution: "Christuraja Higher Secondary School",
+    location: "Marthandam, Tamil Nadu",
+    score: "91%",
+    scoreLabel: "12th Percentage",
+    statusBadge: "Completed",
+    isCollege: false
+  }
+];
 
 export const CERTIFICATIONS = [
   {
